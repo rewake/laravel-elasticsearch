@@ -76,7 +76,7 @@ trait IndexInterpreter
             $indices = $data;
             $data = [];
             foreach ($indices as $index) {
-                if (!(str_starts_with($index['index'], "."))) {
+                if (!(strpos($index['index'], ".") === 0)) {
                     $data[] = $index;
                 }
             }

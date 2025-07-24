@@ -195,7 +195,7 @@ trait QueryBuilder
         foreach ($specialChars as $char) {
             $value = str_replace($char, "\\".$char, $value);
         }
-        if (str_starts_with($value, '-')) {
+        if (strpos($value, '-') === 0) {
             $value = '\\'.$value;
         }
 
@@ -268,7 +268,7 @@ trait QueryBuilder
     {
         $field = key($condition);
         if ($parentField) {
-            if (!str_starts_with($field, $parentField.'.')) {
+            if (!strpos($field, $parentField.'.') === 0) {
                 $field = $parentField.'.'.$field;
             }
         }
@@ -483,7 +483,7 @@ trait QueryBuilder
             $sorts = [];
             foreach ($options['sort'] as $sort) {
                 foreach ($sort as $sortField => $sortPayload) {
-                    if (!str_starts_with($sortField, $field.'.')) {
+                    if (!strpos($sortField, $field.'.') === 0) {
                         $sortField = $field.'.'.$sortField;
                     }
                     $sorts[] = [$sortField => $sortPayload];

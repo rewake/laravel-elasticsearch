@@ -1089,7 +1089,7 @@ class Bridge
     {
         //remove keyword results
         foreach ($highlights as $field => $vals) {
-            if (str_contains($field, '.keyword')) {
+            if (strpos($field, '.keyword')) {
                 $cleanField = str_replace('.keyword', '', $field);
                 if (isset($highlights[$cleanField])) {
                     unset($highlights[$field]);
@@ -1229,7 +1229,7 @@ class Bridge
                 $datum = $currentData;
 
                 $col = $columns[$index];
-                if (str_contains($col, '.keyword')) {
+                if (strpos($col, '.keyword')) {
                     $col = str_replace('.keyword', '', $col);
                 }
 

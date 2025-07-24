@@ -85,7 +85,10 @@ class Connection extends BaseConnection
         return $this->getIndexPrefix();
     }
 
-    public function getErrorLoggingIndex(): string|bool
+    /**
+     * @return string|bool
+     */
+    public function getErrorLoggingIndex()
     {
         return $this->errorLoggingIndex;
     }
@@ -94,7 +97,7 @@ class Connection extends BaseConnection
     {
         $this->index = $index;
         if ($this->indexPrefix) {
-            if (!(str_contains($this->index, $this->indexPrefix.'_'))) {
+            if (!(strpos($this->index, $this->indexPrefix.'_'))) {
                 $this->index = $this->indexPrefix.'_'.$index;
             }
         }

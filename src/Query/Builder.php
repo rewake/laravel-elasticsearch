@@ -970,12 +970,14 @@ class Builder extends BaseBuilder
         if ($boolean === 'and not') {
             $boolean = 'not';
         }
-        $must = match ($boolean) {
-            'and' => 'must',
-            'not', 'or not' => 'must_not',
-            'or' => 'should',
-            default => throw new RuntimeException($boolean.' is not supported for parameter grouping'),
-        };
+
+        switch ($boolean) {
+            case 'and': $must = 'must'; break;
+            case 'not': $must = 'must_not'; break;
+            case 'or not': $must = 'must_not'; break;
+            case 'or': $must = 'should'; break;
+            default: throw new RuntimeException($boolean.' is not supported for parameter grouping');
+        }
 
         $query = $where['query'];
         $wheres = $query->compileWheres();
@@ -1544,7 +1546,14 @@ class Builder extends BaseBuilder
         $this->fields[$field] = $boostFactor ?? 1;
     }
 
-    public function highlight(array $fields = [], string|array $preTag = '<em>', string|array $postTag = '</em>', array $globalOptions = [])
+    /**
+     * @param array $fields
+     * @param string|array $preTag
+     * @param string|array $postTag
+     * @param array $globalOptions
+     * @return void
+     */
+    public function highlight(array $fields = [], $preTag = '<em>', $postTag = '</em>', array $globalOptions = [])
     {
         $highlightFields = [
             '*' => (object)[],
